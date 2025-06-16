@@ -4,7 +4,7 @@ import finalmission.auth.CookieExtractor;
 import finalmission.auth.TokenProvider;
 import finalmission.domain.Member;
 import finalmission.domain.MemberRepository;
-import finalmission.dto.LoginMemberInfo;
+import finalmission.dto.MemberLoginInfo;
 import finalmission.dto.MemberLoginRequest;
 import finalmission.exception.AuthException;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +28,11 @@ public class AuthService {
         return cookieExtractor.createCookieByToken(token);
     }
 
-    public LoginMemberInfo findLoginMemberInfoByToken(String token) {
+    public MemberLoginInfo findLoginMemberInfoByToken(String token) {
         long memberId = Long.parseLong(tokenProvider.parsePayload(token));
         Member loginMember = memberRepository.findById(memberId)
                 .orElseThrow(() -> new AuthException("존재하지 않는 회원 정보입니다."));
-        return new LoginMemberInfo(loginMember);
+        return new MemberLoginInfo(loginMember);
     }
 }
 

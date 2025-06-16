@@ -1,7 +1,7 @@
 package finalmission.controller;
 
-import finalmission.dto.LoginMemberCheckResponse;
-import finalmission.dto.LoginMemberInfo;
+import finalmission.dto.MemberLoginCheckResponse;
+import finalmission.dto.MemberLoginInfo;
 import finalmission.dto.MemberLoginRequest;
 import finalmission.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -27,16 +27,16 @@ public class AuthController {
         log.info("회원 로그인 요청: email={}", request.email());
         ResponseCookie cookie = authService.loginWithCookie(request);
 
-        log.debug("회원 로그인 성공: email={}", request.email());
+        log.debug("회원 로그인 완료: email={}", request.email());
         return ResponseEntity.ok()
                 .header("Set-Cookie", cookie.toString())
                 .build();
     }
 
     @GetMapping("/login/check")
-    public ResponseEntity<LoginMemberCheckResponse> findLoginMember(final LoginMemberInfo info) {
+    public ResponseEntity<MemberLoginCheckResponse> findLoginMember(final MemberLoginInfo info) {
         log.info("회원 로그인 상태 확인 요청: memberId={}", info.id());
-        LoginMemberCheckResponse response = new LoginMemberCheckResponse(info.name());
+        MemberLoginCheckResponse response = new MemberLoginCheckResponse(info.name());
 
         log.debug("회원 로그인 확인 완료: memberName={}",response.name());
         return ResponseEntity.ok()

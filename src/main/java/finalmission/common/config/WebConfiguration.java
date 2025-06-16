@@ -1,6 +1,6 @@
 package finalmission.common.config;
 
-import finalmission.common.argumentresolver.LoginMemberArgumentResolver;
+import finalmission.common.argumentresolver.MemberLoginArgumentResolver;
 import finalmission.service.AuthService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +16,6 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new LoginMemberArgumentResolver(authService));
+        resolvers.add(new MemberLoginArgumentResolver(authService));
     }
 }

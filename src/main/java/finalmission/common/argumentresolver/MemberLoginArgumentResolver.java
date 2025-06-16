@@ -1,7 +1,7 @@
 package finalmission.common.argumentresolver;
 
 import finalmission.auth.CookieExtractor;
-import finalmission.dto.LoginMemberInfo;
+import finalmission.dto.MemberLoginInfo;
 import finalmission.service.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,13 +14,13 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @RequiredArgsConstructor
-public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
+public class MemberLoginArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final AuthService authService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().equals(LoginMemberInfo.class);
+        return parameter.getParameterType().equals(MemberLoginInfo.class);
     }
 
     @Override

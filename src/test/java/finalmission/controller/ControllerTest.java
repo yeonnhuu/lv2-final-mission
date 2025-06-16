@@ -1,4 +1,4 @@
-package finalmission.integration;
+package finalmission.controller;
 
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.restassured.RestAssuredRestDocumentation.documentationConfiguration;
@@ -18,7 +18,7 @@ import org.springframework.restdocs.RestDocumentationExtension;
 @AutoConfigureRestDocs
 @ExtendWith(RestDocumentationExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public abstract class IntegrationTest {
+public abstract class ControllerTest {
 
     @LocalServerPort
     protected int port;
