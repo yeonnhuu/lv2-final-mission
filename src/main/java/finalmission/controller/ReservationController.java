@@ -32,7 +32,7 @@ public class ReservationController {
         log.info("전체 예약 목록 조회 요청 수신");
         List<ReservationResponse> response = reservationService.findReservations();
 
-        log.info("전체 예약 목록 조회 완료: 총 {}건", response.size());
+        log.debug("전체 예약 목록 조회 완료: 총 {}건", response.size());
         return ResponseEntity.ok()
                 .body(response);
     }
@@ -42,7 +42,7 @@ public class ReservationController {
         log.info("예약 요청 수신: reservationId={}, memberId={}", request.lectureId(), memberInfo.id());
         ReservationResponse response = reservationService.saveReservation(request, memberInfo.id());
 
-        log.info("예약 생성 완료: reservationId={}", response.id());
+        log.debug("예약 생성 완료: reservationId={}", response.id());
         return ResponseEntity.created(URI.create("/reservation"))
                 .body(response);
     }
@@ -52,7 +52,7 @@ public class ReservationController {
         log.info("예약 삭제 요청 수신: reservationId={}", id);
         reservationService.deleteReservationById(id);
 
-        log.info("예약 삭제 완료: reservationId={}", id);
+        log.debug("예약 삭제 완료: reservationId={}", id);
         return ResponseEntity.noContent()
                 .build();
     }
