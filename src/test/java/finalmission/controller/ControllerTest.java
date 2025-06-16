@@ -4,7 +4,7 @@ package finalmission.controller;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.restassured.RestAssuredRestDocumentation.document;
 
-import finalmission.dto.MemberLoginRequest;
+import finalmission.dto.request.MemberLoginRequest;
 import finalmission.helper.AuthExtractor;
 import finalmission.helper.DatabaseCleaner;
 import finalmission.helper.FixtureLoader;

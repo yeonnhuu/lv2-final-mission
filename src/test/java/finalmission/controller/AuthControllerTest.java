@@ -7,7 +7,7 @@ import static finalmission.helper.RestDocsFieldSnippets.Auth.MEMBER_LOGIN_REQUES
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 
-import finalmission.dto.MemberLoginRequest;
+import finalmission.dto.request.MemberLoginRequest;
 import io.restassured.filter.Filter;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;

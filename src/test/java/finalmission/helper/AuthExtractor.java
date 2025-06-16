@@ -1,6 +1,6 @@
 package finalmission.helper;
 
-import finalmission.dto.MemberLoginRequest;
+import finalmission.dto.request.MemberLoginRequest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;

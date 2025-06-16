@@ -1,4 +1,4 @@
-package finalmission.dto;
+package finalmission.dto.info;
 
 import finalmission.domain.Member;
 

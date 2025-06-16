@@ -1,10 +1,10 @@
 package finalmission.controller;
 
 import finalmission.annotation.LoginMember;
-import finalmission.dto.MemberLoginInfo;
-import finalmission.dto.ReservationCreateRequest;
-import finalmission.dto.ReservationMineResponse;
-import finalmission.dto.ReservationResponse;
+import finalmission.dto.info.MemberLoginInfo;
+import finalmission.dto.request.ReservationCreateRequest;
+import finalmission.dto.response.ReservationMineResponse;
+import finalmission.dto.response.ReservationResponse;
 import finalmission.service.ReservationService;
 import jakarta.validation.Valid;
 import java.net.URI;

@@ -13,7 +13,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 
-import finalmission.dto.ReservationCreateRequest;
+import finalmission.dto.request.ReservationCreateRequest;
 import io.restassured.filter.Filter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
