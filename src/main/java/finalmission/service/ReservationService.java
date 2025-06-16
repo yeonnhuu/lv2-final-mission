@@ -6,8 +6,8 @@ import finalmission.domain.Member;
 import finalmission.domain.MemberRepository;
 import finalmission.domain.Reservation;
 import finalmission.domain.ReservationRepository;
+import finalmission.dto.ReservationCreateRequest;
 import finalmission.dto.ReservationMineResponse;
-import finalmission.dto.ReservationRequest;
 import finalmission.dto.ReservationResponse;
 import finalmission.exception.LectureException;
 import finalmission.exception.MemberException;
@@ -39,7 +39,7 @@ public class ReservationService {
     }
 
     @Transactional
-    public ReservationResponse saveReservation(ReservationRequest request, long memberId) {
+    public ReservationResponse createReservation(ReservationCreateRequest request, long memberId) {
         Lecture lecture = lectureRepository.findById(request.lectureId())
                 .orElseThrow(() -> new LectureException("운동 클래스 정보를 찾을 수 없습니다."));
         Member member = memberRepository.findById(memberId)

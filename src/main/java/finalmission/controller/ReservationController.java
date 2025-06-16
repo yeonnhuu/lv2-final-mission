@@ -2,8 +2,8 @@ package finalmission.controller;
 
 import finalmission.annotation.LoginMember;
 import finalmission.dto.MemberLoginInfo;
+import finalmission.dto.ReservationCreateRequest;
 import finalmission.dto.ReservationMineResponse;
-import finalmission.dto.ReservationRequest;
 import finalmission.dto.ReservationResponse;
 import finalmission.service.ReservationService;
 import jakarta.validation.Valid;
@@ -39,9 +39,9 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservationResponse> saveReservation(@RequestBody @Valid ReservationRequest request, @LoginMember MemberLoginInfo memberInfo) {
+    public ResponseEntity<ReservationResponse> createReservation(@RequestBody @Valid ReservationCreateRequest request, @LoginMember MemberLoginInfo memberInfo) {
         log.info("예약 생성 요청: reservationId={}, memberId={}", request.lectureId(), memberInfo.id());
-        ReservationResponse response = reservationService.saveReservation(request, memberInfo.id());
+        ReservationResponse response = reservationService.createReservation(request, memberInfo.id());
 
         log.debug("예약 생성 완료: reservationId={}", response.id());
         return ResponseEntity.created(URI.create("/reservation"))

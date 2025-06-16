@@ -21,6 +21,17 @@ public class RestDocsFieldSnippets {
 
     public static class Reservation {
 
+        public static final List<FieldDescriptor> RESERVATION_REQUEST_FIELDS = List.of(
+                fieldWithPath("lectureId").description("운동 종목")
+        );
+
+        public static final List<FieldDescriptor> RESERVATION_RESPONSE_FIELDS = List.of(
+                fieldWithPath("id").description("예약 ID"),
+                fieldWithPath("lecture.sport").description("운동 종목"),
+                fieldWithPath("lecture.date").description("수업 날짜"),
+                fieldWithPath("member.name").description("예약자 이름")
+        );
+
         public static final List<FieldDescriptor> RESERVATION_RESPONSE_LIST_FIELDS = List.of(
                 fieldWithPath("[].id").description("예약 ID"),
                 fieldWithPath("[].lecture.sport").description("운동 종목"),
