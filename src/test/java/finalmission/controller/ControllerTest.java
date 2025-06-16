@@ -6,12 +6,15 @@ import static org.springframework.restdocs.restassured.RestAssuredRestDocumentat
 
 import finalmission.dto.MemberLoginRequest;
 import finalmission.helper.AuthExtractor;
+import finalmission.helper.DatabaseCleaner;
+import finalmission.helper.FixtureLoader;
 import io.restassured.RestAssured;
 import io.restassured.filter.Filter;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -32,6 +35,12 @@ public abstract class ControllerTest {
     @LocalServerPort
     protected int port;
 
+    @Autowired
+    private DatabaseCleaner databaseCleaner;
+
+    @Autowired
+    private FixtureLoader fixtureLoader;
+
     protected RequestSpecification spec;
 
     @BeforeEach
@@ -43,6 +52,9 @@ public abstract class ControllerTest {
                         .operationPreprocessors()
                         .withRequestDefaults(prettyPrint())
                         .withResponseDefaults(prettyPrint()));
+
+        databaseCleaner.execute();
+        fixtureLoader.insertFixtures();
     }
 
     protected abstract String docsBaseDir();

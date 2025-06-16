@@ -24,6 +24,7 @@ public class Reservation {
     private Long id;
 
     private LocalDate reservedAt;
+    private int reserveCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Lecture lecture;
@@ -31,15 +32,16 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    public Reservation(Long id, LocalDate reservedAt, Lecture lecture, Member member) {
+    public Reservation(Long id, LocalDate reservedAt, int reserveCount, Lecture lecture, Member member) {
         this.id = id;
         this.reservedAt = reservedAt;
+        this.reserveCount = reserveCount;
         this.lecture = lecture;
         this.member = member;
     }
 
-    public Reservation(LocalDate reservedAt, Lecture lecture, Member member) {
-        this(null, reservedAt, lecture, member);
+    public Reservation(LocalDate reservedAt, int reserveCount, Lecture lecture, Member member) {
+        this(null, reservedAt, reserveCount, lecture, member);
     }
 }
 

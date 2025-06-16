@@ -46,7 +46,7 @@ public class ReservationControllerTest extends ControllerTest {
         @DisplayName("예약 생성 API")
         void createReservation() {
             String token = extractTestMemberLoginToken();
-            ReservationCreateRequest request = new ReservationCreateRequest(1L);
+            ReservationCreateRequest request = new ReservationCreateRequest(1L, 1);
 
             Filter filter = createDocumentFilter(docsBaseDir(), "create",
                     requestFields(RESERVATION_CREATE_REQUEST_FIELDS),

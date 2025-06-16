@@ -45,7 +45,7 @@ public class ReservationService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberException("회원 정보를 찾을 수 없습니다."));
 
-        Reservation reservation = new Reservation(LocalDate.now(), lecture, member);
+        Reservation reservation = new Reservation(LocalDate.now(), request.reserveCount(), lecture, member);
         Reservation savedReservation = reservationRepository.save(reservation);
         return ReservationResponse.from(savedReservation);
     }
