@@ -21,14 +21,14 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final CookieExtractor cookieExtractor;
 
-    public ResponseCookie loginWithCookie(MemberLoginRequest request) {
+    public ResponseCookie loginMemberWithCookie(MemberLoginRequest request) {
         Member loginMember = memberRepository.findByEmailAndPassword(request.email(), request.password())
                 .orElseThrow(() -> new AuthException("존재하지 않는 이메일 혹은 비밀번호입니다."));
         String token = tokenProvider.createToken(String.valueOf(loginMember.id()));
         return cookieExtractor.createCookieByToken(token);
     }
 
-    public MemberLoginInfo findLoginMemberInfoByToken(String token) {
+    public MemberLoginInfo findMemberLoginInfoByToken(String token) {
         long memberId = Long.parseLong(tokenProvider.parsePayload(token));
         Member loginMember = memberRepository.findById(memberId)
                 .orElseThrow(() -> new AuthException("존재하지 않는 회원 정보입니다."));

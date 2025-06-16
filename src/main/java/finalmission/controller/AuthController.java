@@ -1,5 +1,6 @@
 package finalmission.controller;
 
+import finalmission.annotation.LoginMember;
 import finalmission.dto.MemberLoginCheckResponse;
 import finalmission.dto.MemberLoginInfo;
 import finalmission.dto.MemberLoginRequest;
@@ -23,9 +24,9 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody MemberLoginRequest request) {
+    public ResponseEntity<Void> memberLogin(@RequestBody MemberLoginRequest request) {
         log.info("회원 로그인 요청: email={}", request.email());
-        ResponseCookie cookie = authService.loginWithCookie(request);
+        ResponseCookie cookie = authService.loginMemberWithCookie(request);
 
         log.debug("회원 로그인 완료: email={}", request.email());
         return ResponseEntity.ok()
@@ -34,7 +35,7 @@ public class AuthController {
     }
 
     @GetMapping("/login/check")
-    public ResponseEntity<MemberLoginCheckResponse> findLoginMember(final MemberLoginInfo info) {
+    public ResponseEntity<MemberLoginCheckResponse> memberLoginCheck(@LoginMember MemberLoginInfo info) {
         log.info("회원 로그인 상태 확인 요청: memberId={}", info.id());
         MemberLoginCheckResponse response = new MemberLoginCheckResponse(info.name());
 

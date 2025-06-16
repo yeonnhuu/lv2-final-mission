@@ -1,5 +1,6 @@
 package finalmission.controller;
 
+import finalmission.annotation.LoginMember;
 import finalmission.dto.MemberLoginInfo;
 import finalmission.dto.ReservationMineResponse;
 import finalmission.dto.ReservationRequest;
@@ -38,7 +39,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservationResponse> saveReservation(@RequestBody @Valid ReservationRequest request, MemberLoginInfo memberInfo) {
+    public ResponseEntity<ReservationResponse> saveReservation(@RequestBody @Valid ReservationRequest request, @LoginMember MemberLoginInfo memberInfo) {
         log.info("예약 생성 요청: reservationId={}, memberId={}", request.lectureId(), memberInfo.id());
         ReservationResponse response = reservationService.saveReservation(request, memberInfo.id());
 
@@ -58,11 +59,11 @@ public class ReservationController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<List<ReservationMineResponse>> findMyReservations(MemberLoginInfo memberInfo) {
+    public ResponseEntity<List<ReservationMineResponse>> findMyReservations(@LoginMember MemberLoginInfo memberInfo) {
         log.info("나의 예약 목록 조회 요청: memberId={}", memberInfo.id());
         List<ReservationMineResponse> response = reservationService.findReservationsOfMember(memberInfo.id());
 
-        log.debug("조회된 나의 예약/대기 수: {}", response.size());
+        log.debug("나의 예약 목록 조회 요청 완료: 총 {}건", response.size());
         return ResponseEntity.ok()
                 .body(response);
     }

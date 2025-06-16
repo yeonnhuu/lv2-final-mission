@@ -1,7 +1,7 @@
 package finalmission.common.argumentresolver;
 
+import finalmission.annotation.LoginMember;
 import finalmission.auth.CookieExtractor;
-import finalmission.dto.MemberLoginInfo;
 import finalmission.service.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ public class MemberLoginArgumentResolver implements HandlerMethodArgumentResolve
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().equals(MemberLoginInfo.class);
+        return parameter.hasParameterAnnotation(LoginMember.class);
     }
 
     @Override
@@ -29,7 +29,6 @@ public class MemberLoginArgumentResolver implements HandlerMethodArgumentResolve
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         Cookie[] cookies = Optional.ofNullable(request.getCookies()).orElse(new Cookie[0]);
         String token = CookieExtractor.extractToken(cookies);
-        return authService.findLoginMemberInfoByToken(token);
+        return authService.findMemberLoginInfoByToken(token);
     }
 }
-
