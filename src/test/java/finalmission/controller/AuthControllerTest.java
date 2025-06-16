@@ -1,7 +1,5 @@
 package finalmission.controller;
 
-import static finalmission.helper.AuthTokenExtractor.extractMemberLoginToken;
-import static finalmission.helper.DocsFilterFactory.createDocumentFilter;
 import static finalmission.helper.RestAssuredRequestUtils.sendGetWithTokenAndFilter;
 import static finalmission.helper.RestAssuredRequestUtils.sendPostWithFilter;
 import static finalmission.helper.RestDocsFieldSnippets.Auth.MEMBER_LOGIN_CHECK_RESPONSE_FIELDS;
@@ -19,37 +17,42 @@ import org.springframework.http.HttpHeaders;
 
 public class AuthControllerTest extends ControllerTest {
 
-    private static final String DOCS_BASE_DIR = "auth";
+    @Override
+    protected String docsBaseDir() {
+        return "auth";
+    }
 
-    @DisplayName("인증 API")
     @Nested
+    @DisplayName("인증 API")
     class AuthApi {
 
-        @DisplayName("멤버 로그인 API")
         @Test
+        @DisplayName("멤버 로그인 API")
         void memberLogin() {
             MemberLoginRequest request = new MemberLoginRequest("member1@email.com", "password");
 
-            Filter filter = createDocumentFilter(DOCS_BASE_DIR, "memberLogin",
+            Filter filter = createDocumentFilter(docsBaseDir(), "memberLogin",
                     requestFields(MEMBER_LOGIN_REQUEST_FIELDS)
             );
 
             sendPostWithFilter("/auth/login", request, spec, filter)
-                    .then().statusCode(200)
+                    .then().log().all()
+                    .statusCode(200)
                     .header(HttpHeaders.SET_COOKIE, Matchers.containsString("token="));
         }
 
-        @DisplayName("멤버 로그인 확인 API")
         @Test
+        @DisplayName("멤버 로그인 확인 API")
         void memberLoginCheck() {
-            String token = extractMemberLoginToken();
+            String token = extractTestMemberLoginToken();
 
-            Filter filter = createDocumentFilter(DOCS_BASE_DIR, "memberLoginCheck",
+            Filter filter = createDocumentFilter(docsBaseDir(), "memberLoginCheck",
                     responseFields(MEMBER_LOGIN_CHECK_RESPONSE_FIELDS)
             );
 
             sendGetWithTokenAndFilter("/auth/login/check", spec, token, filter)
-                    .then().statusCode(200);
+                    .then().log().all()
+                    .statusCode(200);
         }
     }
 }

@@ -1,6 +1,5 @@
 package finalmission.controller;
 
-import static finalmission.helper.DocsFilterFactory.createDocumentFilter;
 import static finalmission.helper.RestAssuredRequestUtils.sendDeleteWithFilter;
 import static finalmission.helper.RestAssuredRequestUtils.sendGetWithFilter;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_RESPONSE_LIST_FIELDS;
@@ -15,7 +14,10 @@ import org.junit.jupiter.api.Test;
 
 public class ReservationControllerTest extends ControllerTest {
 
-    private static final String DOCS_BASE_DIR = "reservation";
+    @Override
+    protected String docsBaseDir() {
+        return "reservation";
+    }
 
     @Nested
     @DisplayName("예약 API")
@@ -24,22 +26,25 @@ public class ReservationControllerTest extends ControllerTest {
         @Test
         @DisplayName("예약 목록 조회 API")
         void findReservations() {
-            Filter filter = createDocumentFilter(DOCS_BASE_DIR, "find-all",
+            Filter filter = createDocumentFilter(docsBaseDir(), "find-all",
                     responseFields(RESERVATION_RESPONSE_LIST_FIELDS)
             );
 
             sendGetWithFilter("/reservations", spec, filter)
-                    .then().log().all().statusCode(200);
+                    .then().log().all()
+                    .statusCode(200);
         }
 
         @Test
         @DisplayName("예약 삭제 API")
         void deleteReservation() {
-            Filter filter = createDocumentFilter(DOCS_BASE_DIR, "delete",
-                    pathParameters(parameterWithName("id").description("예약 ID")));
+            Filter filter = createDocumentFilter(docsBaseDir(), "delete",
+                    pathParameters(parameterWithName("id").description("예약 ID"))
+            );
 
             sendDeleteWithFilter("/reservations/{id}", spec, filter, 1)
-                    .then().statusCode(204);
+                    .then().log().all()
+                    .statusCode(204);
         }
     }
 }
