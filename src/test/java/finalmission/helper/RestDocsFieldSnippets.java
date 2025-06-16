@@ -38,5 +38,12 @@ public class RestDocsFieldSnippets {
                 fieldWithPath("[].lecture.date").description("수업 날짜"),
                 fieldWithPath("[].member.name").description("예약자 이름")
         );
+
+        public static final List<FieldDescriptor> RESERVATION_MINE_RESPONSE_LIST_FIELDS = List.of(
+                fieldWithPath("[].id").description("예약 ID"),
+                fieldWithPath("[].reservedAt").description("예약 생성일"),
+                fieldWithPath("[].lecture.sport").description("운동 종목"),
+                fieldWithPath("[].lecture.date").description("수업 날짜")
+        );
     }
 }

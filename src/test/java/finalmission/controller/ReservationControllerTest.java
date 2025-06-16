@@ -2,7 +2,9 @@ package finalmission.controller;
 
 import static finalmission.helper.RestAssuredRequestUtils.sendDeleteWithFilter;
 import static finalmission.helper.RestAssuredRequestUtils.sendGetWithFilter;
+import static finalmission.helper.RestAssuredRequestUtils.sendGetWithTokenAndFilter;
 import static finalmission.helper.RestAssuredRequestUtils.sendPostWithTokenAndFilter;
+import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_MINE_RESPONSE_LIST_FIELDS;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_REQUEST_FIELDS;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_RESPONSE_FIELDS;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_RESPONSE_LIST_FIELDS;
@@ -67,6 +69,20 @@ public class ReservationControllerTest extends ControllerTest {
             sendDeleteWithFilter("/reservations/{id}", spec, filter, 1)
                     .then().log().all()
                     .statusCode(204);
+        }
+
+        @Test
+        @DisplayName("나의 예약 목록 조회 API")
+        void findMyReservations() {
+            String token = extractTestMemberLoginToken();
+
+            Filter filter = createDocumentFilter(docsBaseDir(), "find-all-mine",
+                    responseFields(RESERVATION_MINE_RESPONSE_LIST_FIELDS)
+            );
+
+            sendGetWithTokenAndFilter("/reservations/me", spec, token, filter)
+                    .then().log().all()
+                    .statusCode(200);
         }
     }
 }
