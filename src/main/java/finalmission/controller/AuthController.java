@@ -1,9 +1,9 @@
 package finalmission.controller;
 
 import finalmission.annotation.LoginMember;
-import finalmission.dto.response.MemberLoginCheckResponse;
 import finalmission.dto.info.MemberLoginInfo;
 import finalmission.dto.request.MemberLoginRequest;
+import finalmission.dto.response.MemberLoginCheckResponse;
 import finalmission.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

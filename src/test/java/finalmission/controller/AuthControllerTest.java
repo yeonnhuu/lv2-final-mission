@@ -1,7 +1,7 @@
 package finalmission.controller;
 
-import static finalmission.helper.RestAssuredRequestUtils.sendGetWithTokenAndFilter;
-import static finalmission.helper.RestAssuredRequestUtils.sendPostWithFilter;
+import static finalmission.helper.RestAssuredRequestUtils.sendGetRequestWithToken;
+import static finalmission.helper.RestAssuredRequestUtils.sendPostRequest;
 import static finalmission.helper.RestDocsFieldSnippets.Auth.MEMBER_LOGIN_CHECK_RESPONSE_FIELDS;
 import static finalmission.helper.RestDocsFieldSnippets.Auth.MEMBER_LOGIN_REQUEST_FIELDS;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -14,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 
 public class AuthControllerTest extends ControllerTest {
 
@@ -31,13 +32,13 @@ public class AuthControllerTest extends ControllerTest {
         void memberLogin() {
             MemberLoginRequest request = new MemberLoginRequest("member1@email.com", "password");
 
-            Filter filter = createDocumentFilter(docsBaseDir(), "memberLogin",
+            Filter filter = createDocumentFilter(docsBaseDir(), "member-login",
                     requestFields(MEMBER_LOGIN_REQUEST_FIELDS)
             );
 
-            sendPostWithFilter("/auth/login", request, spec, filter)
+            sendPostRequest("/auth/login", request, spec, filter)
                     .then().log().all()
-                    .statusCode(200)
+                    .statusCode(HttpStatus.OK.value())
                     .header(HttpHeaders.SET_COOKIE, Matchers.containsString("token="));
         }
 
@@ -46,13 +47,13 @@ public class AuthControllerTest extends ControllerTest {
         void memberLoginCheck() {
             String token = extractTestMemberLoginToken();
 
-            Filter filter = createDocumentFilter(docsBaseDir(), "memberLoginCheck",
+            Filter filter = createDocumentFilter(docsBaseDir(), "member-login-check",
                     responseFields(MEMBER_LOGIN_CHECK_RESPONSE_FIELDS)
             );
 
-            sendGetWithTokenAndFilter("/auth/login/check", spec, token, filter)
+            sendGetRequestWithToken("/auth/login/check", spec, token, filter)
                     .then().log().all()
-                    .statusCode(200);
+                    .statusCode(HttpStatus.OK.value());
         }
     }
 }

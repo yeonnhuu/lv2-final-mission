@@ -40,6 +40,14 @@ public class RestDocsFieldSnippets {
                 parameterWithName("id").description("삭제하려는 예약의 ID")
         );
 
+        public static final List<FieldDescriptor> RESERVATION_MINE_RESPONSE_LIST_FIELDS = List.of(
+                fieldWithPath("[].id").description("예약의 ID"),
+                fieldWithPath("[].reservedAt").description("예약한 날짜 (yyyy-MM-dd)"),
+                fieldWithPath("[].reserveCount").description("예약한 강의의 예약 인원"),
+                fieldWithPath("[].lecture.sport").description("예약한 강의의 운동 종목"),
+                fieldWithPath("[].lecture.date").description("예약한 강의의 수업 날짜 (yyyy-MM-dd)")
+        );
+
         public static final List<FieldDescriptor> RESERVATION_RESPONSE_FIELDS = List.of(
                 fieldWithPath("id").description("예약의 ID"),
                 fieldWithPath("lecture.sport").description("예약한 강의의 운동 종목"),
@@ -54,12 +62,5 @@ public class RestDocsFieldSnippets {
                 fieldWithPath("[].member.name").description("예약한 멤버의 이름")
         );
 
-        public static final List<FieldDescriptor> RESERVATION_MINE_RESPONSE_LIST_FIELDS = List.of(
-                fieldWithPath("[].id").description("예약의 ID"),
-                fieldWithPath("[].reservedAt").description("예약한 날짜 (yyyy-MM-dd)"),
-                fieldWithPath("[].reserveCount").description("예약한 강의의 예약 인원"),
-                fieldWithPath("[].lecture.sport").description("예약한 강의의 운동 종목"),
-                fieldWithPath("[].lecture.date").description("예약한 강의의 수업 날짜 (yyyy-MM-dd)")
-        );
     }
 }
