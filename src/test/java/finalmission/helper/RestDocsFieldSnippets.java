@@ -24,12 +24,20 @@ public class RestDocsFieldSnippets {
     public static class Reservation {
 
         public static final List<FieldDescriptor> RESERVATION_CREATE_REQUEST_FIELDS = List.of(
-                fieldWithPath("lectureId").description("예약하려는 강의의 ID"),
-                fieldWithPath("reserveCount").description("예약하려는 강의의 예약 인원")
+                fieldWithPath("lectureId").description("예약하려는 예약의 ID"),
+                fieldWithPath("reserveCount").description("예약하려는 예약 인원")
+        );
+
+        public static final List<ParameterDescriptor> RESERVATION_UPDATE_PATH_PARAMETERS = List.of(
+                parameterWithName("id").description("수정하려는 예약의 ID")
+        );
+
+        public static final List<FieldDescriptor> RESERVATION_UPDATE_REQUEST_FIELDS = List.of(
+                fieldWithPath("reserveCount").description("수정하려는 예약 인원")
         );
 
         public static final List<ParameterDescriptor> RESERVATION_DELETE_PATH_PARAMETERS = List.of(
-                parameterWithName("id").description("삭제하려는 강의의 ID")
+                parameterWithName("id").description("삭제하려는 예약의 ID")
         );
 
         public static final List<FieldDescriptor> RESERVATION_RESPONSE_FIELDS = List.of(

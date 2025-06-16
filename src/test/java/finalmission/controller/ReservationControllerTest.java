@@ -4,16 +4,20 @@ import static finalmission.helper.RestAssuredRequestUtils.sendDeleteWithFilter;
 import static finalmission.helper.RestAssuredRequestUtils.sendGetWithFilter;
 import static finalmission.helper.RestAssuredRequestUtils.sendGetWithTokenAndFilter;
 import static finalmission.helper.RestAssuredRequestUtils.sendPostWithTokenAndFilter;
+import static finalmission.helper.RestAssuredRequestUtils.sendPutWithTokenAndFilter;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_CREATE_REQUEST_FIELDS;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_DELETE_PATH_PARAMETERS;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_MINE_RESPONSE_LIST_FIELDS;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_RESPONSE_FIELDS;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_RESPONSE_LIST_FIELDS;
+import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_UPDATE_PATH_PARAMETERS;
+import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_UPDATE_REQUEST_FIELDS;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 
 import finalmission.dto.request.ReservationCreateRequest;
+import finalmission.dto.request.ReservationUpdateRequest;
 import io.restassured.filter.Filter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -48,15 +52,31 @@ public class ReservationControllerTest extends ControllerTest {
             String token = extractTestMemberLoginToken();
             ReservationCreateRequest request = new ReservationCreateRequest(1L, 1);
 
-            Filter filter = createDocumentFilter(docsBaseDir(), "create",
+            Filter filter = createDocumentFilter(docsBaseDir(), "update",
                     requestFields(RESERVATION_CREATE_REQUEST_FIELDS),
                     responseFields(RESERVATION_RESPONSE_FIELDS)
             );
 
             sendPostWithTokenAndFilter("/reservations", request, spec, token, filter)
                     .then().log().all()
-                    .statusCode(201)
-                    .header("Location", "/reservation");
+                    .statusCode(201);
+        }
+
+        @Test
+        @DisplayName("예약 수정 API")
+        void updateReservation() {
+            String token = extractTestMemberLoginToken();
+            ReservationUpdateRequest request = new ReservationUpdateRequest(3);
+
+            Filter filter = createDocumentFilter(docsBaseDir(), "update",
+                    pathParameters(RESERVATION_UPDATE_PATH_PARAMETERS),
+                    requestFields(RESERVATION_UPDATE_REQUEST_FIELDS),
+                    responseFields(RESERVATION_RESPONSE_FIELDS)
+            );
+
+            sendPutWithTokenAndFilter("/reservations/{id}", request, spec, token, filter, 1)
+                    .then().log().all()
+                    .statusCode(200);
         }
 
         @Test

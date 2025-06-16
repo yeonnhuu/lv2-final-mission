@@ -3,6 +3,7 @@ package finalmission.controller;
 import finalmission.annotation.LoginMember;
 import finalmission.dto.info.MemberLoginInfo;
 import finalmission.dto.request.ReservationCreateRequest;
+import finalmission.dto.request.ReservationUpdateRequest;
 import finalmission.dto.response.ReservationMineResponse;
 import finalmission.dto.response.ReservationResponse;
 import finalmission.service.ReservationService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,8 +50,18 @@ public class ReservationController {
                 .body(response);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ReservationResponse> updateReservation(@PathVariable("id") long id, @RequestBody @Valid ReservationUpdateRequest request, @LoginMember MemberLoginInfo memberInfo) {
+        log.info("예약 수정 요청: reservationId={}, reserveCount={}, memberId={}", id, request.reserveCount(), memberInfo.id());
+        ReservationResponse response = reservationService.updateReservation(id, request, memberInfo.id());
+
+        log.debug("예약 수정 완료: reservationId={}", response.id());
+        return ResponseEntity.ok()
+                .body(response);
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReservationById(@PathVariable("id") long id) {
+    public ResponseEntity<Void> deleteReservation(@PathVariable("id") long id) {
         log.info("예약 삭제 요청: reservationId={}", id);
         reservationService.deleteReservationById(id);
 

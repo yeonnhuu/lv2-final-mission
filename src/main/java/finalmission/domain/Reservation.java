@@ -43,5 +43,13 @@ public class Reservation {
     public Reservation(LocalDate reservedAt, int reserveCount, Lecture lecture, Member member) {
         this(null, reservedAt, reserveCount, lecture, member);
     }
+
+    public boolean isSameMember(long memberId){
+        return member.id() == memberId;
+    }
+
+    public void changeReserveCount(int reservedCount){
+        this.reserveCount = reservedCount;
+    }
 }
 

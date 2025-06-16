@@ -4,6 +4,7 @@ import finalmission.domain.Reservation;
 import finalmission.domain.ReservationRepository;
 import finalmission.infrastructure.jpa.ReservationJpaRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -31,5 +32,10 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     @Override
     public List<Reservation> findAllByMemberId(final long memberId) {
         return reservationJpaRepository.findAllByMemberId(memberId);
+    }
+
+    @Override
+    public Optional<Reservation> findById(final long id) {
+        return reservationJpaRepository.findById(id);
     }
 }

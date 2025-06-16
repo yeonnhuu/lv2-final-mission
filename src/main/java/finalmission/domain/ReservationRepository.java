@@ -1,6 +1,7 @@
 package finalmission.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReservationRepository {
 
@@ -11,4 +12,6 @@ public interface ReservationRepository {
     List<Reservation> findAll();
 
     List<Reservation> findAllByMemberId(long memberId);
+
+    Optional<Reservation> findById(long id);
 }
