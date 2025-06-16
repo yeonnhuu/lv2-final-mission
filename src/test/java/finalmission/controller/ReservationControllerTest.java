@@ -4,13 +4,13 @@ import static finalmission.helper.RestAssuredRequestUtils.sendDeleteWithFilter;
 import static finalmission.helper.RestAssuredRequestUtils.sendGetWithFilter;
 import static finalmission.helper.RestAssuredRequestUtils.sendGetWithTokenAndFilter;
 import static finalmission.helper.RestAssuredRequestUtils.sendPostWithTokenAndFilter;
+import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_CREATE_REQUEST_FIELDS;
+import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_DELETE_PATH_PARAMETERS;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_MINE_RESPONSE_LIST_FIELDS;
-import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_REQUEST_FIELDS;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_RESPONSE_FIELDS;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_RESPONSE_LIST_FIELDS;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 
 import finalmission.dto.ReservationCreateRequest;
@@ -49,7 +49,7 @@ public class ReservationControllerTest extends ControllerTest {
             ReservationCreateRequest request = new ReservationCreateRequest(1L);
 
             Filter filter = createDocumentFilter(docsBaseDir(), "create",
-                    requestFields(RESERVATION_REQUEST_FIELDS),
+                    requestFields(RESERVATION_CREATE_REQUEST_FIELDS),
                     responseFields(RESERVATION_RESPONSE_FIELDS)
             );
 
@@ -63,7 +63,7 @@ public class ReservationControllerTest extends ControllerTest {
         @DisplayName("예약 삭제 API")
         void deleteReservation() {
             Filter filter = createDocumentFilter(docsBaseDir(), "delete",
-                    pathParameters(parameterWithName("id").description("예약 ID"))
+                    pathParameters(RESERVATION_DELETE_PATH_PARAMETERS)
             );
 
             sendDeleteWithFilter("/reservations/{id}", spec, filter, 1)
