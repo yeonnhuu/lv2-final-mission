@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 
 import finalmission.domain.EmailClient;
 import finalmission.dto.request.EmailRequest;
-import finalmission.dto.response.ReservationResponse;
+import finalmission.dto.response.BookingResponse;
 import finalmission.infrastructure.email.EmailMessageFactory;
 import finalmission.infrastructure.email.sendgrid.SendGridEmailRequestFactory;
 import finalmission.infrastructure.email.sendgrid.dto.SendGridEmailRequest;
@@ -34,7 +34,7 @@ class EmailServiceTest {
     @Test
     void sendReserveSuccessEmail_shouldCreateAndSendEmailRequest() {
         // given
-        ReservationResponse dummyResponse = mock(ReservationResponse.class);
+        BookingResponse dummyResponse = mock(BookingResponse.class);
 
         EmailRequest emailRequest = new EmailRequest("제목", "내용", "to@example.com");
         SendGridEmailRequest sendGridEmailRequest = mock(SendGridEmailRequest.class);

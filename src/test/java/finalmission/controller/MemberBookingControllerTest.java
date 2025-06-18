@@ -15,8 +15,8 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 
-import finalmission.dto.request.ReservationCreateRequest;
-import finalmission.dto.request.ReservationUpdateRequest;
+import finalmission.dto.request.BookingCreateRequest;
+import finalmission.dto.request.BookingUpdateRequest;
 import finalmission.service.EmailService;
 import io.restassured.filter.Filter;
 import org.junit.jupiter.api.DisplayName;
@@ -60,7 +60,7 @@ public class MemberBookingControllerTest extends ControllerTest {
                     responseFields(RESERVATION_MINE_RESPONSE_LIST_FIELDS)
             );
 
-            sendGetRequestWithToken("/reservations/me", spec, token, filter)
+            sendGetRequestWithToken("/bookings/me", spec, token, filter)
                     .then().log().all()
                     .statusCode(HttpStatus.OK.value());
         }
@@ -69,14 +69,14 @@ public class MemberBookingControllerTest extends ControllerTest {
         @DisplayName("예약 생성 API")
         void createReservation() {
             String token = extractTestMemberLoginToken();
-            ReservationCreateRequest request = new ReservationCreateRequest(1L, 1);
+            BookingCreateRequest request = new BookingCreateRequest(1L, 1);
 
             Filter filter = createDocumentFilter(docsBaseDir(), "create",
                     requestFields(RESERVATION_CREATE_REQUEST_FIELDS),
                     responseFields(RESERVATION_RESPONSE_FIELDS)
             );
 
-            sendPostRequestWithToken("/reservations", request, spec, token, filter)
+            sendPostRequestWithToken("/bookings", request, spec, token, filter)
                     .then().log().all()
                     .statusCode(HttpStatus.CREATED.value());
         }
@@ -85,7 +85,7 @@ public class MemberBookingControllerTest extends ControllerTest {
         @DisplayName("예약 수정 API")
         void updateReservation() {
             String token = extractTestMemberLoginToken();
-            ReservationUpdateRequest request = new ReservationUpdateRequest(3);
+            BookingUpdateRequest request = new BookingUpdateRequest(3);
 
             Filter filter = createDocumentFilter(docsBaseDir(), "update",
                     pathParameters(RESERVATION_UPDATE_PATH_PARAMETERS),
@@ -93,7 +93,7 @@ public class MemberBookingControllerTest extends ControllerTest {
                     responseFields(RESERVATION_RESPONSE_FIELDS)
             );
 
-            sendPutRequestWithToken("/reservations/{id}", request, spec, token, filter, 1)
+            sendPutRequestWithToken("/bookings/{id}", request, spec, token, filter, 1)
                     .then().log().all()
                     .statusCode(HttpStatus.OK.value());
         }
@@ -107,7 +107,7 @@ public class MemberBookingControllerTest extends ControllerTest {
                     pathParameters(RESERVATION_DELETE_PATH_PARAMETERS)
             );
 
-            sendDeleteRequestWithToken("/reservations/{id}", spec, token, filter, 1)
+            sendDeleteRequestWithToken("/bookings/{id}", spec, token, filter, 1)
                     .then().log().all()
                     .statusCode(HttpStatus.NO_CONTENT.value());
         }

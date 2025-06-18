@@ -2,10 +2,10 @@ package finalmission.controller;
 
 import finalmission.common.annotation.LoginMember;
 import finalmission.dto.info.MemberLoginInfo;
-import finalmission.dto.request.ReservationCreateRequest;
-import finalmission.dto.request.ReservationUpdateRequest;
-import finalmission.dto.response.ReservationMineResponse;
-import finalmission.dto.response.ReservationResponse;
+import finalmission.dto.request.BookingCreateRequest;
+import finalmission.dto.request.BookingUpdateRequest;
+import finalmission.dto.response.BookingMineResponse;
+import finalmission.dto.response.BookingResponse;
 import finalmission.service.BookingService;
 import jakarta.validation.Valid;
 import java.net.URI;
@@ -25,15 +25,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/reservations")
+@RequestMapping("/bookings")
 public class MemberBookingController {
 
     private final BookingService bookingService;
 
     @GetMapping("/me")
-    public ResponseEntity<List<ReservationMineResponse>> findMyReservations(@LoginMember MemberLoginInfo memberInfo) {
+    public ResponseEntity<List<BookingMineResponse>> findMyBookings(@LoginMember MemberLoginInfo memberInfo) {
         log.info("멤버 예약 목록 조회 요청: memberId={}", memberInfo.id());
-        List<ReservationMineResponse> response = bookingService.findReservationsOfMember(memberInfo.id());
+        List<BookingMineResponse> response = bookingService.findBookingsOfMember(memberInfo.id());
 
         log.debug("멤버 예약 목록 조회 요청 완료: 총 {}건", response.size());
         return ResponseEntity.ok()
@@ -41,9 +41,9 @@ public class MemberBookingController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservationResponse> createReservation(@RequestBody @Valid ReservationCreateRequest request, @LoginMember MemberLoginInfo memberInfo) {
+    public ResponseEntity<BookingResponse> createBooking(@RequestBody @Valid BookingCreateRequest request, @LoginMember MemberLoginInfo memberInfo) {
         log.info("멤버 예약 생성 요청: lectureId={}, memberId={}", request.lectureId(), memberInfo.id());
-        ReservationResponse response = bookingService.createReservation(request, memberInfo.id());
+        BookingResponse response = bookingService.createBooking(request, memberInfo.id());
 
         log.debug("멤버 예약 생성 완료: reservationId={}, memberId={}", response.id(), memberInfo.id());
         return ResponseEntity.created(URI.create("/reservation"))
@@ -51,9 +51,9 @@ public class MemberBookingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReservationResponse> updateReservation(@PathVariable("id") long id, @RequestBody @Valid ReservationUpdateRequest request, @LoginMember MemberLoginInfo memberInfo) {
+    public ResponseEntity<BookingResponse> updateBooking(@PathVariable("id") long id, @RequestBody @Valid BookingUpdateRequest request, @LoginMember MemberLoginInfo memberInfo) {
         log.info("멤버 예약 수정 요청: reservationId={}, reserveCount={}, memberId={}", id, request.reserveCount(), memberInfo.id());
-        ReservationResponse response = bookingService.updateReservation(id, request, memberInfo.id());
+        BookingResponse response = bookingService.updateBooking(id, request, memberInfo.id());
 
         log.debug("멤버 예약 수정 완료: reservationId={}, memberId={}", response.id(), memberInfo.id());
         return ResponseEntity.ok()
@@ -61,9 +61,9 @@ public class MemberBookingController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReservation(@PathVariable("id") long id, @LoginMember MemberLoginInfo memberInfo) {
+    public ResponseEntity<Void> deleteBooking(@PathVariable("id") long id, @LoginMember MemberLoginInfo memberInfo) {
         log.info("멤버 예약 삭제 요청: reservationId={}, memberId={}", id, memberInfo.id());
-        bookingService.deleteReservationById(id);
+        bookingService.deleteBooking(id);
 
         log.debug("멤버 예약 삭제 완료: reservationId={}, memberId={}", id, memberInfo.id());
         return ResponseEntity.noContent()

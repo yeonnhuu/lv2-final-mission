@@ -9,10 +9,10 @@ import finalmission.domain.Member;
 import finalmission.domain.MemberRepository;
 import finalmission.domain.Reservation;
 import finalmission.domain.ReservationRepository;
-import finalmission.dto.request.ReservationCreateRequest;
-import finalmission.dto.request.ReservationUpdateRequest;
-import finalmission.dto.response.ReservationMineResponse;
-import finalmission.dto.response.ReservationResponse;
+import finalmission.dto.request.BookingCreateRequest;
+import finalmission.dto.request.BookingUpdateRequest;
+import finalmission.dto.response.BookingMineResponse;
+import finalmission.dto.response.BookingResponse;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -28,43 +28,59 @@ public class ReservationService {
     private final LectureRepository lectureRepository;
     private final MemberRepository memberRepository;
 
-    public List<ReservationResponse> findReservations() {
+    public List<BookingResponse> findReservations() {
         return reservationRepository.findAll().stream()
-                .map(ReservationResponse::from)
+                .map(BookingResponse::from)
                 .toList();
     }
 
-    public List<ReservationMineResponse> findReservationsOfMember(long memberId) {
+    public List<BookingMineResponse> findReservationsOfMember(long memberId) {
         return reservationRepository.findAllByMemberId(memberId).stream()
-                .map(ReservationMineResponse::from)
+                .map(BookingMineResponse::from)
                 .toList();
     }
 
     @Transactional
-    public ReservationResponse createReservation(ReservationCreateRequest request, long memberId) {
-        Lecture lecture = lectureRepository.findById(request.lectureId())
-                .orElseThrow(() -> new LectureException("존재하지 않는 강의입니다."));
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberException("존재하지 않는 회원입니다."));
-
+    public BookingResponse createReservation(BookingCreateRequest request, long memberId) {
+        Lecture lecture = findLectureById(request.lectureId());
+        Member member = findMemberById(memberId);
         Reservation reservation = new Reservation(LocalDate.now(), request.reserveCount(), lecture, member);
+
         Reservation savedReservation = reservationRepository.save(reservation);
-        return ReservationResponse.from(savedReservation);
+        return BookingResponse.from(savedReservation);
     }
 
     @Transactional
-    public ReservationResponse updateReservation(long id, ReservationUpdateRequest request, long memberId) {
-        Reservation reservation = reservationRepository.findById(id)
-                .orElseThrow(() -> new ReservationException("존재하지 않는 예약입니다."));
+    public BookingResponse updateReservation(long id, BookingUpdateRequest request, long memberId) {
+        Reservation reservation = findReservationById(id);
+        validateUpdateMember(memberId, reservation);
+        reservation.changeReserveCount(request.reserveCount());
+        return BookingResponse.from(reservation);
+    }
+
+    @Transactional
+    public void deleteReservation(long id) {
+        reservationRepository.deleteById(id);
+    }
+
+    private void validateUpdateMember(final long memberId, final Reservation reservation) {
         if (!reservation.isSameMember(memberId)) {
             throw new ReservationException("본인의 예약만 수정할 수 있습니다.");
         }
-        reservation.changeReserveCount(request.reserveCount());
-        return ReservationResponse.from(reservation);
     }
 
-    @Transactional
-    public void deleteReservationById(long id) {
-        reservationRepository.deleteById(id);
+    private Reservation findReservationById(final long id) {
+        return reservationRepository.findById(id)
+                .orElseThrow(() -> new ReservationException("존재하지 않는 예약입니다."));
+    }
+
+    private Lecture findLectureById(long lectureId) {
+        return lectureRepository.findById(lectureId)
+                .orElseThrow(() -> new LectureException("존재하지 않는 강의입니다."));
+    }
+
+    private Member findMemberById(long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberException("존재하지 않는 회원입니다."));
     }
 }

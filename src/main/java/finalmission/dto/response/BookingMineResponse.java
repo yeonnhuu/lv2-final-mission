@@ -4,11 +4,11 @@ import finalmission.domain.Lecture;
 import finalmission.domain.Reservation;
 import java.time.LocalDate;
 
-public record ReservationMineResponse(Long id, LocalDate reservedAt, int reserveCount, LectureResponse lecture) {
+public record BookingMineResponse(Long id, LocalDate reservedAt, int reserveCount, LectureResponse lecture) {
 
-    public static ReservationMineResponse from(Reservation reservation) {
+    public static BookingMineResponse from(Reservation reservation) {
         Lecture lecture = reservation.lecture();
-        return new ReservationMineResponse(
+        return new BookingMineResponse(
                 reservation.id(),
                 reservation.reservedAt(),
                 reservation.reserveCount(),

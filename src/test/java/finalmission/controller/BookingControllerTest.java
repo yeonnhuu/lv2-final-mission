@@ -28,7 +28,7 @@ public class BookingControllerTest extends ControllerTest {
                     responseFields(RESERVATION_RESPONSE_LIST_FIELDS)
             );
 
-            sendGetRequest("/reservations", spec, filter)
+            sendGetRequest("/bookings", spec, filter)
                     .then().log().all()
                     .statusCode(HttpStatus.OK.value());
         }

@@ -1,9 +1,9 @@
 package finalmission.service;
 
-import finalmission.dto.request.ReservationCreateRequest;
-import finalmission.dto.request.ReservationUpdateRequest;
-import finalmission.dto.response.ReservationMineResponse;
-import finalmission.dto.response.ReservationResponse;
+import finalmission.dto.request.BookingCreateRequest;
+import finalmission.dto.request.BookingUpdateRequest;
+import finalmission.dto.response.BookingMineResponse;
+import finalmission.dto.response.BookingResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,25 +15,25 @@ public class BookingService {
     private final ReservationService reservationService;
     private final EmailService emailService;
 
-    public List<ReservationResponse> findReservations() {
+    public List<BookingResponse> findBookings() {
         return reservationService.findReservations();
     }
 
-    public List<ReservationMineResponse> findReservationsOfMember(long memberId) {
+    public List<BookingMineResponse> findBookingsOfMember(long memberId) {
         return reservationService.findReservationsOfMember(memberId);
     }
 
-    public ReservationResponse createReservation(ReservationCreateRequest request, long memberId) {
-        ReservationResponse reservationResponse = reservationService.createReservation(request, memberId);
-        emailService.sendReserveSuccessEmail(reservationResponse);
-        return reservationResponse;
+    public BookingResponse createBooking(BookingCreateRequest request, long memberId) {
+        BookingResponse bookingResponse = reservationService.createReservation(request, memberId);
+        emailService.sendReserveSuccessEmail(bookingResponse);
+        return bookingResponse;
     }
 
-    public ReservationResponse updateReservation(long id, ReservationUpdateRequest request, long memberId) {
+    public BookingResponse updateBooking(long id, BookingUpdateRequest request, long memberId) {
        return reservationService.updateReservation(id, request, memberId);
     }
 
-    public void deleteReservationById(long id) {
-        reservationService.deleteReservationById(id);
+    public void deleteBooking(long id) {
+        reservationService.deleteReservation(id);
     }
 }

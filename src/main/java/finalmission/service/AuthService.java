@@ -22,17 +22,26 @@ public class AuthService {
     private final CookieExtractor cookieExtractor;
 
     public ResponseCookie loginMemberWithCookie(MemberLoginRequest request) {
-        Member loginMember = memberRepository.findByEmailAndPassword(request.email(), request.password())
-                .orElseThrow(() -> new AuthException("존재하지 않는 이메일 혹은 비밀번호입니다."));
-        String token = tokenProvider.createToken(String.valueOf(loginMember.id()));
+        Member member = findMemberByEmailAndPassword(request.email(), request.password());
+        long memberId = member.id();
+        String token = tokenProvider.createToken(String.valueOf(memberId));
         return cookieExtractor.createCookieByToken(token);
     }
 
     public MemberLoginInfo findMemberLoginInfoByToken(String token) {
         long memberId = Long.parseLong(tokenProvider.parsePayload(token));
-        Member loginMember = memberRepository.findById(memberId)
-                .orElseThrow(() -> new AuthException("존재하지 않는 회원 정보입니다."));
+        Member loginMember = findMemberById(memberId);
         return new MemberLoginInfo(loginMember);
+    }
+
+    private Member findMemberByEmailAndPassword(String email, String password) {
+        return memberRepository.findByEmailAndPassword(email, password)
+                .orElseThrow(() -> new AuthException("존재하지 않는 회원 이메일 혹은 비밀번호입니다."));
+    }
+
+    private Member findMemberById(final long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new AuthException("존재하지 않는 회원 정보입니다."));
     }
 }
 
