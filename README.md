@@ -1,5 +1,13 @@
 # 운동 클래스 예약 서비스
 
+## 개요
+
+### 다이어그램
+
+![다이어그램](src/main/resources/static/images/diagram.png)
+
+---
+
 ## 도메인 목록
 
 ### Member
@@ -11,6 +19,7 @@
 ### Reservation
 - [x] 예약 날짜와 예약 인원, Lecture, Member에 대한 정보를 가진다.
 
+---
 
 ## 기능 구현 목록
 
