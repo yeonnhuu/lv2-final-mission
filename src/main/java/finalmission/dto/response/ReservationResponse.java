@@ -12,7 +12,7 @@ public record ReservationResponse(Long id, LectureResponse lecture, MemberRespon
         return new ReservationResponse(
                 reservation.id(),
                 new LectureResponse(lecture.sport(), lecture.date()),
-                new MemberResponse(member.name())
+                new MemberResponse(member.name(), member.email())
         );
     }
 }

@@ -1,4 +1,4 @@
-package finalmission.exception;
+package finalmission.common.exception;
 
 public class BusinessException extends RuntimeException {
 

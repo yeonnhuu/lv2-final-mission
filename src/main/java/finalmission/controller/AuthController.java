@@ -1,6 +1,6 @@
 package finalmission.controller;
 
-import finalmission.annotation.LoginMember;
+import finalmission.common.annotation.LoginMember;
 import finalmission.dto.info.MemberLoginInfo;
 import finalmission.dto.request.MemberLoginRequest;
 import finalmission.dto.response.MemberLoginCheckResponse;

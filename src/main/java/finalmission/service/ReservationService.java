@@ -1,5 +1,8 @@
 package finalmission.service;
 
+import finalmission.common.exception.LectureException;
+import finalmission.common.exception.MemberException;
+import finalmission.common.exception.ReservationException;
 import finalmission.domain.Lecture;
 import finalmission.domain.LectureRepository;
 import finalmission.domain.Member;
@@ -10,9 +13,6 @@ import finalmission.dto.request.ReservationCreateRequest;
 import finalmission.dto.request.ReservationUpdateRequest;
 import finalmission.dto.response.ReservationMineResponse;
 import finalmission.dto.response.ReservationResponse;
-import finalmission.exception.LectureException;
-import finalmission.exception.MemberException;
-import finalmission.exception.ReservationException;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
-package finalmission.common.argumentresolver;
+package finalmission.common.resolver;
 
-import finalmission.annotation.LoginMember;
 import finalmission.auth.CookieExtractor;
+import finalmission.common.annotation.LoginMember;
 import finalmission.service.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

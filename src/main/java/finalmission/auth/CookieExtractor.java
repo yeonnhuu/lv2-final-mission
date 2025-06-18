@@ -1,6 +1,6 @@
 package finalmission.auth;
 
-import finalmission.exception.AuthException;
+import finalmission.common.exception.AuthException;
 import jakarta.servlet.http.Cookie;
 import java.util.Arrays;
 import org.springframework.http.ResponseCookie;

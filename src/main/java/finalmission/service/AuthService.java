@@ -2,11 +2,11 @@ package finalmission.service;
 
 import finalmission.auth.CookieExtractor;
 import finalmission.auth.TokenProvider;
+import finalmission.common.exception.AuthException;
 import finalmission.domain.Member;
 import finalmission.domain.MemberRepository;
 import finalmission.dto.info.MemberLoginInfo;
 import finalmission.dto.request.MemberLoginRequest;
-import finalmission.exception.AuthException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;

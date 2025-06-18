@@ -1,6 +1,6 @@
 package finalmission.auth;
 
-import finalmission.exception.AuthException;
+import finalmission.common.exception.AuthException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;

@@ -1,7 +1,7 @@
 package finalmission.controller;
 
 import finalmission.dto.response.ReservationResponse;
-import finalmission.service.ReservationService;
+import finalmission.service.BookingService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/reservations")
-public class ReservationController {
+public class BookingController {
 
-    private final ReservationService reservationService;
+    private final BookingService bookingService;
 
     @GetMapping
     public ResponseEntity<List<ReservationResponse>> findReservations() {
         log.info("전체 예약 목록 조회 요청");
-        List<ReservationResponse> response = reservationService.findReservations();
+        List<ReservationResponse> response = bookingService.findReservations();
 
         log.debug("전체 예약 목록 조회 완료: 총 {}건", response.size());
         return ResponseEntity.ok()

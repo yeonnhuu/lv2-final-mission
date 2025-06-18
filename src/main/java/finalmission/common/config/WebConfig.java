@@ -1,6 +1,6 @@
 package finalmission.common.config;
 
-import finalmission.common.argumentresolver.MemberLoginArgumentResolver;
+import finalmission.common.resolver.MemberLoginArgumentResolver;
 import finalmission.service.AuthService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @RequiredArgsConstructor
-public class WebConfiguration implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
 
     private final AuthService authService;
 

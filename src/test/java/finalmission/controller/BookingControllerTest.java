@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-public class ReservationControllerTest extends ControllerTest {
+public class BookingControllerTest extends ControllerTest {
 
     @Override
     protected String docsBaseDir() {

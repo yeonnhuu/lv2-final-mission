@@ -52,15 +52,16 @@ public class RestDocsFieldSnippets {
                 fieldWithPath("id").description("예약의 ID"),
                 fieldWithPath("lecture.sport").description("예약한 강의의 운동 종목"),
                 fieldWithPath("lecture.date").description("예약한 강의의 수업 날짜 (yyyy-MM-dd)"),
-                fieldWithPath("member.name").description("예약한 멤버의 이름")
+                fieldWithPath("member.name").description("예약한 멤버의 이름"),
+                fieldWithPath("member.email").description("예약한 멤버의 이메일")
         );
 
         public static final List<FieldDescriptor> RESERVATION_RESPONSE_LIST_FIELDS = List.of(
                 fieldWithPath("[].id").description("예약의 ID"),
                 fieldWithPath("[].lecture.sport").description("예약한 강의의 운동 종목"),
                 fieldWithPath("[].lecture.date").description("예약한 강의의 수업 날짜 (yyyy-MM-dd)"),
-                fieldWithPath("[].member.name").description("예약한 멤버의 이름")
+                fieldWithPath("[].member.name").description("예약한 멤버의 이름"),
+                fieldWithPath("[].member.email").description("예약한 멤버의 이메일")
         );
-
     }
 }

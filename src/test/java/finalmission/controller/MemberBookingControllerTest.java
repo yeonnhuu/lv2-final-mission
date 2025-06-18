@@ -10,19 +10,37 @@ import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_RESPONSE_FIELDS;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_UPDATE_PATH_PARAMETERS;
 import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_UPDATE_REQUEST_FIELDS;
+import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 
 import finalmission.dto.request.ReservationCreateRequest;
 import finalmission.dto.request.ReservationUpdateRequest;
+import finalmission.service.EmailService;
 import io.restassured.filter.Filter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 
-public class MemberReservationControllerTest extends ControllerTest {
+@Import(MemberBookingControllerTest.TestMockConfig.class)
+public class MemberBookingControllerTest extends ControllerTest {
+
+    @Autowired
+    private EmailService emailService;
+
+    @TestConfiguration
+    static class TestMockConfig {
+        @Bean
+        public EmailService emailService() {
+            return mock(EmailService.class);
+        }
+    }
 
     @Override
     protected String docsBaseDir() {
