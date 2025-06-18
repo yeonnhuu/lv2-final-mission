@@ -21,26 +21,26 @@ public class RestDocsFieldSnippets {
         );
     }
 
-    public static class Reservation {
+    public static class Booking {
 
-        public static final List<FieldDescriptor> RESERVATION_CREATE_REQUEST_FIELDS = List.of(
+        public static final List<FieldDescriptor> BOOKING_CREATE_REQUEST_FIELDS = List.of(
                 fieldWithPath("lectureId").description("예약하려는 예약의 ID"),
                 fieldWithPath("reserveCount").description("예약하려는 예약 인원")
         );
 
-        public static final List<ParameterDescriptor> RESERVATION_UPDATE_PATH_PARAMETERS = List.of(
+        public static final List<ParameterDescriptor> BOOKING_UPDATE_PATH_PARAMETERS = List.of(
                 parameterWithName("id").description("수정하려는 예약의 ID")
         );
 
-        public static final List<FieldDescriptor> RESERVATION_UPDATE_REQUEST_FIELDS = List.of(
+        public static final List<FieldDescriptor> BOOKING_UPDATE_REQUEST_FIELDS = List.of(
                 fieldWithPath("reserveCount").description("수정하려는 예약 인원")
         );
 
-        public static final List<ParameterDescriptor> RESERVATION_DELETE_PATH_PARAMETERS = List.of(
+        public static final List<ParameterDescriptor> BOOKING_DELETE_PATH_PARAMETERS = List.of(
                 parameterWithName("id").description("삭제하려는 예약의 ID")
         );
 
-        public static final List<FieldDescriptor> RESERVATION_MINE_RESPONSE_LIST_FIELDS = List.of(
+        public static final List<FieldDescriptor> BOOKING_MINE_RESPONSE_LIST_FIELDS = List.of(
                 fieldWithPath("[].id").description("예약의 ID"),
                 fieldWithPath("[].reservedAt").description("예약한 날짜 (yyyy-MM-dd)"),
                 fieldWithPath("[].reserveCount").description("예약한 강의의 예약 인원"),
@@ -48,7 +48,7 @@ public class RestDocsFieldSnippets {
                 fieldWithPath("[].lecture.date").description("예약한 강의의 수업 날짜 (yyyy-MM-dd)")
         );
 
-        public static final List<FieldDescriptor> RESERVATION_RESPONSE_FIELDS = List.of(
+        public static final List<FieldDescriptor> BOOKING_RESPONSE_FIELDS = List.of(
                 fieldWithPath("id").description("예약의 ID"),
                 fieldWithPath("lecture.sport").description("예약한 강의의 운동 종목"),
                 fieldWithPath("lecture.date").description("예약한 강의의 수업 날짜 (yyyy-MM-dd)"),
@@ -56,7 +56,7 @@ public class RestDocsFieldSnippets {
                 fieldWithPath("member.email").description("예약한 멤버의 이메일")
         );
 
-        public static final List<FieldDescriptor> RESERVATION_RESPONSE_LIST_FIELDS = List.of(
+        public static final List<FieldDescriptor> BOOKING_RESPONSE_LIST_FIELDS = List.of(
                 fieldWithPath("[].id").description("예약의 ID"),
                 fieldWithPath("[].lecture.sport").description("예약한 강의의 운동 종목"),
                 fieldWithPath("[].lecture.date").description("예약한 강의의 수업 날짜 (yyyy-MM-dd)"),

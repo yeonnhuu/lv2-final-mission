@@ -10,6 +10,7 @@ import finalmission.dto.response.BookingResponse;
 import finalmission.infrastructure.email.EmailMessageFactory;
 import finalmission.infrastructure.email.sendgrid.SendGridEmailRequestFactory;
 import finalmission.infrastructure.email.sendgrid.dto.SendGridEmailRequest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,12 +32,13 @@ class EmailServiceTest {
     @InjectMocks
     private EmailService emailService;
 
+    @DisplayName("예약 성공에 대한 이메일 전송을 요청한다.")
     @Test
-    void sendReserveSuccessEmail_shouldCreateAndSendEmailRequest() {
+    void sendReserveSuccessEmail() {
         // given
         BookingResponse dummyResponse = mock(BookingResponse.class);
 
-        EmailRequest emailRequest = new EmailRequest("제목", "내용", "to@example.com");
+        EmailRequest emailRequest = new EmailRequest("이메일 제목", "이메일 본문", "to@example.com");
         SendGridEmailRequest sendGridEmailRequest = mock(SendGridEmailRequest.class);
 
         when(messageFactory.createReserveSuccessEmail(dummyResponse)).thenReturn(emailRequest);

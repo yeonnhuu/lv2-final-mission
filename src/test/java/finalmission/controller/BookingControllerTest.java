@@ -1,7 +1,7 @@
 package finalmission.controller;
 
 import static finalmission.helper.RestAssuredRequestUtils.sendGetRequest;
-import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_RESPONSE_LIST_FIELDS;
+import static finalmission.helper.RestDocsFieldSnippets.Booking.BOOKING_RESPONSE_LIST_FIELDS;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 
 import io.restassured.filter.Filter;
@@ -17,18 +17,22 @@ public class BookingControllerTest extends ControllerTest {
         return "reservation";
     }
 
-    @Nested
     @DisplayName("예약 API")
-    class ReservationApi {
+    @Nested
+    class BookingApi {
 
-        @Test
         @DisplayName("예약 목록 조회 API")
-        void findReservations() {
+        @Test
+        void findBookings() {
+            // given
+            String uri = "/bookings";
+
             Filter filter = createDocumentFilter(docsBaseDir(), "find-all",
-                    responseFields(RESERVATION_RESPONSE_LIST_FIELDS)
+                    responseFields(BOOKING_RESPONSE_LIST_FIELDS)
             );
 
-            sendGetRequest("/bookings", spec, filter)
+            // when & then
+            sendGetRequest(uri, spec, filter)
                     .then().log().all()
                     .statusCode(HttpStatus.OK.value());
         }

@@ -23,35 +23,41 @@ public class AuthControllerTest extends ControllerTest {
         return "auth";
     }
 
-    @Nested
     @DisplayName("인증 API")
+    @Nested
     class AuthApi {
 
-        @Test
         @DisplayName("멤버 로그인 API")
+        @Test
         void memberLogin() {
+            // given
+            String uri = "/auth/login";
             MemberLoginRequest request = new MemberLoginRequest("member1@email.com", "password");
 
             Filter filter = createDocumentFilter(docsBaseDir(), "member-login",
                     requestFields(MEMBER_LOGIN_REQUEST_FIELDS)
             );
 
-            sendPostRequest("/auth/login", request, spec, filter)
+            // when & then
+            sendPostRequest(uri, request, spec, filter)
                     .then().log().all()
                     .statusCode(HttpStatus.OK.value())
                     .header(HttpHeaders.SET_COOKIE, Matchers.containsString("token="));
         }
 
-        @Test
         @DisplayName("멤버 로그인 확인 API")
+        @Test
         void memberLoginCheck() {
+            // given
+            String uri = "/auth/login/check";
             String token = extractTestMemberLoginToken();
 
             Filter filter = createDocumentFilter(docsBaseDir(), "member-login-check",
                     responseFields(MEMBER_LOGIN_CHECK_RESPONSE_FIELDS)
             );
 
-            sendGetRequestWithToken("/auth/login/check", spec, token, filter)
+            // when & then
+            sendGetRequestWithToken(uri, spec, token, filter)
                     .then().log().all()
                     .statusCode(HttpStatus.OK.value());
         }

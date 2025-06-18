@@ -4,12 +4,12 @@ import static finalmission.helper.RestAssuredRequestUtils.sendDeleteRequestWithT
 import static finalmission.helper.RestAssuredRequestUtils.sendGetRequestWithToken;
 import static finalmission.helper.RestAssuredRequestUtils.sendPostRequestWithToken;
 import static finalmission.helper.RestAssuredRequestUtils.sendPutRequestWithToken;
-import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_CREATE_REQUEST_FIELDS;
-import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_DELETE_PATH_PARAMETERS;
-import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_MINE_RESPONSE_LIST_FIELDS;
-import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_RESPONSE_FIELDS;
-import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_UPDATE_PATH_PARAMETERS;
-import static finalmission.helper.RestDocsFieldSnippets.Reservation.RESERVATION_UPDATE_REQUEST_FIELDS;
+import static finalmission.helper.RestDocsFieldSnippets.Booking.BOOKING_CREATE_REQUEST_FIELDS;
+import static finalmission.helper.RestDocsFieldSnippets.Booking.BOOKING_DELETE_PATH_PARAMETERS;
+import static finalmission.helper.RestDocsFieldSnippets.Booking.BOOKING_MINE_RESPONSE_LIST_FIELDS;
+import static finalmission.helper.RestDocsFieldSnippets.Booking.BOOKING_RESPONSE_FIELDS;
+import static finalmission.helper.RestDocsFieldSnippets.Booking.BOOKING_UPDATE_PATH_PARAMETERS;
+import static finalmission.helper.RestDocsFieldSnippets.Booking.BOOKING_UPDATE_REQUEST_FIELDS;
 import static org.mockito.Mockito.mock;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -47,67 +47,81 @@ public class MemberBookingControllerTest extends ControllerTest {
         return "member-reservation";
     }
 
-    @Nested
     @DisplayName("멤버 예약 API")
-    class MemberReservationApi {
+    @Nested
+    class MemberBookingApi {
 
-        @Test
         @DisplayName("예약 목록 조회 API")
-        void findMyReservations() {
+        @Test
+        void findMyBookings() {
+            // given
+            String uri = "/bookings/me";
             String token = extractTestMemberLoginToken();
 
             Filter filter = createDocumentFilter(docsBaseDir(), "find-all",
-                    responseFields(RESERVATION_MINE_RESPONSE_LIST_FIELDS)
+                    responseFields(BOOKING_MINE_RESPONSE_LIST_FIELDS)
             );
 
-            sendGetRequestWithToken("/bookings/me", spec, token, filter)
+            // when & then
+            sendGetRequestWithToken(uri, spec, token, filter)
                     .then().log().all()
                     .statusCode(HttpStatus.OK.value());
         }
 
-        @Test
         @DisplayName("예약 생성 API")
-        void createReservation() {
+        @Test
+        void createBooking() {
+            // given
+            String uri = "/bookings";
             String token = extractTestMemberLoginToken();
             BookingCreateRequest request = new BookingCreateRequest(1L, 1);
 
             Filter filter = createDocumentFilter(docsBaseDir(), "create",
-                    requestFields(RESERVATION_CREATE_REQUEST_FIELDS),
-                    responseFields(RESERVATION_RESPONSE_FIELDS)
+                    requestFields(BOOKING_CREATE_REQUEST_FIELDS),
+                    responseFields(BOOKING_RESPONSE_FIELDS)
             );
 
-            sendPostRequestWithToken("/bookings", request, spec, token, filter)
+            // when & then
+            sendPostRequestWithToken(uri, request, spec, token, filter)
                     .then().log().all()
                     .statusCode(HttpStatus.CREATED.value());
         }
 
-        @Test
         @DisplayName("예약 수정 API")
-        void updateReservation() {
+        @Test
+        void updateBooking() {
+            // given
+            String uri = "/bookings/{id}";
+            long id = 1;
             String token = extractTestMemberLoginToken();
             BookingUpdateRequest request = new BookingUpdateRequest(3);
 
             Filter filter = createDocumentFilter(docsBaseDir(), "update",
-                    pathParameters(RESERVATION_UPDATE_PATH_PARAMETERS),
-                    requestFields(RESERVATION_UPDATE_REQUEST_FIELDS),
-                    responseFields(RESERVATION_RESPONSE_FIELDS)
+                    pathParameters(BOOKING_UPDATE_PATH_PARAMETERS),
+                    requestFields(BOOKING_UPDATE_REQUEST_FIELDS),
+                    responseFields(BOOKING_RESPONSE_FIELDS)
             );
 
-            sendPutRequestWithToken("/bookings/{id}", request, spec, token, filter, 1)
+            // when & then
+            sendPutRequestWithToken(uri, request, spec, token, filter, id)
                     .then().log().all()
                     .statusCode(HttpStatus.OK.value());
         }
 
-        @Test
         @DisplayName("예약 삭제 API")
-        void deleteReservation() {
+        @Test
+        void deleteBooking() {
+            // given
+            String uri = "/bookings/{id}";
+            long id = 1;
             String token = extractTestMemberLoginToken();
 
             Filter filter = createDocumentFilter(docsBaseDir(), "delete",
-                    pathParameters(RESERVATION_DELETE_PATH_PARAMETERS)
+                    pathParameters(BOOKING_DELETE_PATH_PARAMETERS)
             );
 
-            sendDeleteRequestWithToken("/bookings/{id}", spec, token, filter, 1)
+            // when & then
+            sendDeleteRequestWithToken(uri, spec, token, filter, id)
                     .then().log().all()
                     .statusCode(HttpStatus.NO_CONTENT.value());
         }

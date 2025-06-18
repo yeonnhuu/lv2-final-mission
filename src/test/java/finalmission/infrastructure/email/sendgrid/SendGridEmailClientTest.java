@@ -41,6 +41,7 @@ class SendGridEmailClientTest {
     @DisplayName("이메일 전송을 요청한다.")
     @Test
     void sendEmail() {
+        // given
         server.expect(requestTo(BASE_URL + "/send"))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(withSuccess());
@@ -48,12 +49,14 @@ class SendGridEmailClientTest {
         String fromEmail = "yeonnhuu@gmail.com";
         SendGridEmailRequest request = createSendGridEmailRequest(fromEmail);
 
+        // when & then
         assertDoesNotThrow(() -> sendGridEmailClient.sendEmail(request));
     }
 
     @DisplayName("이메일 전송에 실패하면 예외가 발생한다.")
     @Test
     void throwEmailSendException() {
+        // given
         String expectedBody = """
                 {
                     "errors": [
@@ -77,6 +80,7 @@ class SendGridEmailClientTest {
         String fromEmail = "unverified@email.com";
         SendGridEmailRequest request = createSendGridEmailRequest(fromEmail);
 
+        // when & then
         assertThatCode(() -> sendGridEmailClient.sendEmail(request))
                 .isInstanceOf(EmailSendException.class)
                 .hasMessageContaining("이메일 전송 실패");
